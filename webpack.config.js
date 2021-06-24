@@ -6,7 +6,7 @@ module.exports = function (options) {
   return {
     ...options,
     entry: ['webpack/hot/poll?100', './src/main.ts'],
-    watch: true,
+    watch: process.env.NODE_ENV === 'development',
     externals: [
       nodeExternals({
         allowlist: ['webpack/hot/poll?100'],
