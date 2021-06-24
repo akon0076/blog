@@ -14,4 +14,5 @@ export const jdbc: TypeOrmModuleOptions = {
 
 export const dbUrl = {
   development: `mysql://${jdbc.host}:${jdbc.port}/${jdbc.database}?user=${jdbc.username}&password=${jdbc.password}`,
+  production: `mysql://${jdbc.host}:${jdbc.port}/${jdbc.database}?user=${jdbc.username}&password=${jdbc.password}`,
 };
