@@ -7,8 +7,9 @@
    "license": "UNLICENSED",
    "scripts": {
       "prebuild": "rimraf dist",
-      "build": "nest build --watch --webpack",
+      "hot": "nest build --watch --webpack",
       "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+      "build": "nest build",
       "start": "cross-env NODE_ENV=development node dist/main",
       "start:mysql": "ts-node src/index.ts",
       "start:dev": "nest start --watch",
