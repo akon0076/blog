@@ -35,7 +35,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   // 设置所有 api 访问前缀
-  app.setGlobalPrefix('/api');
+  // app.setGlobalPrefix('/api');
 
   // 使用全局拦截器打印出参 TransformInterceptor
   // app.useGlobalInterceptors(new TransformStream()); // TODO 待找到对应的包

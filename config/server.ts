@@ -1,5 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm/dist/interfaces/typeorm-options.interface';
-export const port = 8080;
+export const port = 80;
 
 export const jdbc: TypeOrmModuleOptions = {
   type: 'mysql',

@@ -19,9 +19,14 @@ import { commonApi } from '../../../../type';
 import { get } from 'http';
 import { UserCreatInputDTO } from 'localSrc/APP/CRUD/dto';
 
-@Controller('crud')
+@Controller('')
 export class SimpleController {
   constructor(private readonly simpleService: SimpleService) {}
+
+  @Get('')
+  defaultReturn() {
+    return '李娅楠是傻逼！！！';
+  }
 
   @Post('creat')
   async creat(@Body() body: UserCreatInputDTO) {
