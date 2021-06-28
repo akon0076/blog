@@ -17,16 +17,11 @@ import { SimpleService } from '../../service/simple';
 import { User } from '../../eneity/User';
 import { commonApi } from '../../../../type';
 import { get } from 'http';
-import { UserCreatInputDTO } from 'localSrc/APP/CRUD/dto';
+import { UserCreatInputDTO } from 'localSrc/server/CRUD/dto';
 
-@Controller('')
+@Controller('crud')
 export class SimpleController {
   constructor(private readonly simpleService: SimpleService) {}
-
-  @Get('')
-  defaultReturn() {
-    return '李娅楠是傻逼！！！';
-  }
 
   @Post('creat')
   async creat(@Body() body: UserCreatInputDTO) {

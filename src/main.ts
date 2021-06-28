@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import { join } from 'path';
 import 'reflect-metadata';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import register from '@react-ssr/nestjs-express/register';
 import FlywayJs from 'flyway-js';
 import {
   Injectable,
@@ -16,7 +18,9 @@ const express = require('express');
 declare const module: any;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  register(app);
+  app.setViewEngine('hbs');
   if (module.hot) {
     module.hot.accept();
     module.hot.dispose(() => app.close());
@@ -46,6 +50,10 @@ async function bootstrap() {
   // 否则 HttpExceptionFilter 就不生效了，全被 AllExceptionsFilter 捕获了
   // app.useGlobalFilters(new AllExceptionFilter()); // TODO 待找到对应的包
   // app.useGlobalFilters(new HttpExceptionFilter()); // TODO 待找到对应的包
+
+  app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.setViewEngine('hbs');
 
   // 接口文档 swagger 参数
   const options = new DocumentBuilder()

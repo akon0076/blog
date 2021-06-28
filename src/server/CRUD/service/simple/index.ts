@@ -2,7 +2,7 @@ import { Injectable, Param } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../eneity/User';
-import { UserCreatInputDTO } from 'localSrc/APP/CRUD/dto';
+import { UserCreatInputDTO } from 'localSrc/server/CRUD/dto';
 
 @Injectable()
 export class SimpleService {
