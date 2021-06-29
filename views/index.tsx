@@ -1,21 +1,21 @@
 import React from 'react';
-import {
-  Document,
-  Head,
-  Main,
-} from '@react-ssr/nestjs-express';
+import { Head } from '@react-ssr/nestjs-express';
 
-export default class extends Document {
-  render() {
-    return (
-      <html lang="en">
-        <Head>
-          <title>react-ssr-nestjs-starter</title>
-        </Head>
-        <body>
-          <Main />
-        </body>
-      </html>
-    );
-  }
+interface IndexProps {
+  message: string;
+}
+
+const Index = (props: IndexProps) => {
+  return (
+    <React.Fragment>
+      <Head>
+        
+        <title>An example of @react-ssr/nestjs-express</title>
+      </Head>
+      <p>{props.message}</p>
+      <a href="/about">Go to the about page</a>
+    </React.Fragment>
+  );
 };
+
+export default Index;
