@@ -1,14 +1,12 @@
-import { Module } from '@nestjs/common'
-import { ApiController } from './api.controller'
-import { DetailController } from './detail.controller'
-import { ApiDetailService } from './detail.service'
-
+import { Module } from '@nestjs/common';
+import { ApiController } from './api.controller';
+import { DetailController } from './detail.controller';
+import { ApiDetailService } from './detail.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from '../crud/eneity/User';
 @Module({
-  imports: [
-
-  ],
-  controllers: [DetailController, ApiController],
-  providers: [ApiDetailService]
+	imports: [TypeOrmModule.forFeature([User])],
+	controllers: [DetailController, ApiController],
+	providers: [ApiDetailService]
 })
-
 export class DetailModule {}

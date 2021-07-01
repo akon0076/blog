@@ -11,4 +11,4 @@ import { ApiService } from './index.service'
   providers: [ApiService]
 })
 
-export class indexModule {}
+export class IndexModule {}
