@@ -1,2 +1,5 @@
-export * from './page-index'
-export * from './detail-index'
+import { RouteComponentProps } from 'react-router';
+export interface IApi{
+	request: any;
+}
+export * from './page-index';
