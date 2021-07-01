@@ -1,0 +1,15 @@
+node_modules
+!app/node_modules
+!mock_node_modules/framework/_server_src/node_modules
+!mock_node_modules/framework/_client_src/node_modules
+!mock_node_modules/framework/_server_src/portal/src/node_modules
+logs
+.DS_Store
+npm-debug.log
+yarn-error.log
+package-lock.json
+.cvte_env
+public
+version.config
+.history
+.vscode
