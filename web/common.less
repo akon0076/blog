@@ -1,83 +1,67 @@
+@import './variables.less';
+.basic-body-css {
+	font-size: @default-font-size;
+	width: 40%;
+	margin: auto;
+	padding: 0px 32px;
+	box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
+}
+#app {
+	height: 100%;
+	overflow-y: scroll;
+}
+body {
+	.basic-body-css;
+}
+
+/** 黑夜模式 */
+@media (prefers-color-scheme: dark) {
+	/* 操作系统及浏览器支持且用户开启了 Dark Mode */
+	body {
+		.basic-body-css;
+		background-color: black;
+		color: white;
+	}
+  h1, h2, h3, h4, h5, h6 {
+    color: white;
+  }
+	:global {
+		.ant-btn-primary {
+      &:hover {
+        border-color: white;
+      }
+			background-color: black !important;
+      border-color: gray;
+		}
+	}
+}
 * {
 	margin: 0;
 	padding: 0;
 }
-body {
-	font-size: 14px;
-}
 .font {
-	font-size: 14px;
+	font-size: @default-font-size;
 }
-// a {
-//   color: #fff;
-//   text-decoration: none;
-// }
 
-// ul {
-//   list-style: none;
-// }
+/** antd样式覆盖 */
+:global {
+	.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+		padding: 4px 8px;
+	}
+	.ant-card {
+		.ant-card-head {
+			padding: 0px @default-padding;
+			min-height: @normal-Height;
+			.ant-card-head-wrapper {
+				height: @normal-Height;
+			}
+		}
+		.ant-card-body {
+			padding: @default-padding;
+		}
+	}
 
-// :global {
-//   .loading {
-//     width: 30px;
-//     height: 30px;
-//     .verticalLevelCenter;
-//   }
-// }
-
-// .verticalCenter {
-//   position: absolute;
-//   top: 50%;
-//   transform: translate(0, -50%)
-// }
-// .levelCenter {
-//   position: absolute;
-//   left: 50%;
-//   transform: translate(-50%, 0)
-// }
-// .verticalLevelCenter {
-//   position: absolute;
-//   left: 50%;
-//   top: 50%;
-//   transform: translate(-50%, -50%)
-// }
-// .verticalCenterFlex {
-//   display: flex;
-//   align-items: center;
-// }
-// .levelCenterFlex {
-//   display: flex;
-//   justify-content: center;
-// }
-// .verticalLevelCenterFlex {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// }
-// .overflowEllipsis {
-//   overflow: hidden;
-//   text-overflow:ellipsis;
-//   white-space: nowrap;
-// }
-// .pName {
-//   font-size: 15px;
-//   color: #000000;
-//   margin-top: 10px;
-//   padding-left: 9px;
-//   overflow: hidden;
-//   white-space: nowrap;
-//   text-overflow: ellipsis;
-//   height: 25px;
-//   line-height: 25px;
-//   z-index: 99;
-// }
-// .pDesc {
-//   padding-left: 9px;
-//   font-size: 13px;
-//   color: #999999;
-//   margin-bottom: 20px;
-//   overflow: hidden;
-//   white-space: nowrap;
-//   text-overflow: ellipsis;
-//   z-index: 99;
-// }
+	.ant-card-head-title {
+		padding: 8px 0px;
+	}
+}

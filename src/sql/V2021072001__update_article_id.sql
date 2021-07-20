@@ -1,0 +1,1 @@
+alter table article modify column id varchar(255);

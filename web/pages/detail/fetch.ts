@@ -2,7 +2,7 @@ import { IApi } from '@/interface/';
 import { RouteComponentProps } from 'react-router';
 
 interface ICtx extends IApi, RouteComponentProps<{ id: string }> {
-	apiDeatilservice: {};
+	apiDeatilservice: any;
 }
 
 export default async (ctx: ICtx) => {

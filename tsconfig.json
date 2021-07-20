@@ -14,7 +14,7 @@
     "pretty": true,
     "declaration": true,
     "outDir": "dist",
-    "typeRoots": [ "./typings", "./node_modules/@types"]
+    "typeRoots": [ "./node_modules/@types" ]
   },
   "exclude": [
     "dist",
