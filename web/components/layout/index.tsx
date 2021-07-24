@@ -21,6 +21,7 @@ const Layout = (props: LayoutProps) => {
         {injectCss}
       </head>
       <body>
+        <input id="env" className="inject-input" value={process.env.NODE_ENV} />
         <div id="app"><App children={props.children} /></div>
         {
           state && <script dangerouslySetInnerHTML={{

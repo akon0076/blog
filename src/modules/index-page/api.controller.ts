@@ -1,14 +1,34 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Query, Body, Get, Put } from '@nestjs/common';
 import { ApiService } from './index.service';
-import { ISavePage } from './@types';
+import { ISavePage, ISaveFile } from './@types';
 
 @Controller('/api')
 export class ApiController {
 	constructor(private readonly apiService: ApiService) {}
 
-	@Post('/savePage')
+	@Put('/page')
 	async savePage(@Body() body: ISavePage) {
-		console.log('log: ~ file: api.controller.ts ~ line 11 ~ ApiController ~ savePage ~ body', body);
 		await this.apiService.savePage({ page: body as any });
+	}
+
+	@Get('/page')
+	async getPage(@Query() params) {
+		const res = await this.apiService.getPage();
+		return res;
+	}
+	@Put('/file')
+	async saveFile(@Body() body: ISaveFile) {
+		try {
+			await this.apiService.saveFile({
+				file: body as any
+			});
+		} catch (e) {
+			console.log(e);
+		}
+	}
+
+	@Get('/file')
+	async getFile(@Query() params) {
+		return this.apiService.getFile();
 	}
 }

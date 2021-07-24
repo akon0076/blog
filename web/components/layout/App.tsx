@@ -3,7 +3,7 @@
 
 import { LayoutProps } from 'ssr-types-react';
 import { IContext, SProps } from 'ssr-types-react'
-import { useEffect, useContext, useState, useCallback, useRef } from 'react';
+import { useLayoutEffect, useContext, useState, useCallback, useRef } from 'react';
 import { Ddata, globalProps } from '@/interface';
 
 const App = (props: LayoutProps) => {
@@ -17,7 +17,7 @@ const App = (props: LayoutProps) => {
   }, []);
 
   /** 全局事件处理 */
-  useEffect(() => {
+  useLayoutEffect(() => {
     setSystemTheme({ matches: window.matchMedia('(prefers-color-scheme: dark)').matches });
 
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {

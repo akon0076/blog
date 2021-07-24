@@ -1,1 +1,1 @@
-alter table article modify column id varchar(255);
+ALTER TABLE article  MODIFY COLUMN id VARCHAR(255)  

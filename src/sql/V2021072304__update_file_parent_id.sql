@@ -1,0 +1,1 @@
+ALTER TABLE file ADD parent_id VARCHAR(255);

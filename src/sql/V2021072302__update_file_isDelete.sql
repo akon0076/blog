@@ -1,0 +1,1 @@
+ALTER TABLE file ADD is_delete TINYINT(1)

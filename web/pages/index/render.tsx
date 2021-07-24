@@ -3,14 +3,16 @@ import { SProps, IContext } from 'ssr-types-react';
 import MDHeader from '../../components/MDHeader';
 import style from './index.less';
 import Editor from "rich-markdown-editor";
+import { http } from '../../http';
 import { globalProps } from '@/interface';
-import axios from 'axios';
+import PageList from '@/components/PageList';
 
 export default (props: SProps) => {
   const divRef = useRef<any>();
   const editerRef = useRef<ElementRef<typeof Editor>>();
   const { state } = useContext<IContext<globalProps>>(window.STORE_CONTEXT);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState('Hello world!');
+  const [title, setTitle] = useState('MarkDown');
   useEffect(() => {
     divRef.current.addEventListener('paste', function (event: any) {
       const files: any[] = [];
@@ -20,24 +22,30 @@ export default (props: SProps) => {
       }
       event.stopPropagation();
     }, true);
+
   }, []);
 
   /** 保存 */
-  const save = useCallback(async (value) => {
-    const res = await axios.post('http://localhost/api/savePage', {
-      content: value
+  const save = useCallback(async ({ value, title }) => {
+    http({
+      api: '/page',
+      method: 'put',
+      data: {
+        content: value,
+        title
+      }
     })
-    console.log("log: ~ file: render.tsx ~ line 30 ~ save ~ res", res);
-  }, [])
+  }, []);
+
   return (
     <div ref={divRef} className={style.index}>
-      <MDHeader onClick={() => save(value)} />
+      <PageList />
+      <MDHeader onClick={() => save({ value, title })} />
       <div className={style['editor-wapper']}>
         <Editor
           ref={editerRef as any}
           dark={(state as globalProps).systemTheme === 'dark'}
           onChange={(getvalue) => {
-            console.log(editerRef.current)
             setValue(getvalue());
           }}
           defaultValue="Hello world!"

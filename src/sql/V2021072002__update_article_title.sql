@@ -1,0 +1,1 @@
+ALTER TABLE article ADD title VARCHAR(255) not null;

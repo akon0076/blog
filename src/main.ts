@@ -10,7 +10,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap(): Promise<void> {
 	const app = await NestFactory.create<NestExpressApplication>(AppModule);
-	await initialSSRDevProxy(app, {
+  await initialSSRDevProxy(app, {
 		express: true
 	});
 	app.useStaticAssets(join(getCwd(), './build'));
@@ -33,7 +33,7 @@ async function bootstrap(): Promise<void> {
 		baseline: ''
 	};
 	//如果 force_init 为 true 则每次请求flyway_js 表。主要为啦适配单元测试.生产 需要是 false. 单元测试时 需要为 true
-	let forceInit = true;
+	let forceInit = false;
 	new FlywayJs(db_url, sql_dir, forceInit, flywayOptions).run();
 	Logger.log('数据库更新成功', 'database');
 

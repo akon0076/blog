@@ -1,0 +1,89 @@
+@import '../../common.less';
+@tree-node-width: 250px;
+.tree {
+	display: flex;
+	justify-content: flex-start;
+	position: fixed;
+	height: 100%;
+	left: 15%;
+	top: 50px;
+	width: @tree-node-width;
+	:global {
+		.ant-tree {
+			.ant-tree-list {
+				width: @tree-node-width;
+				.ant-tree-treenode {
+					align-items: center;
+					.ant-tree-switcher {
+						width: 12px;
+						display: flex;
+						justify-content: center;
+						.ant-tree-switcher-icon {
+							margin: auto;
+							width: 12px;
+						}
+					}
+					.ant-tree-node-content-wrapper {
+           .ant-tree-title {
+             height: 24px;
+             display: block;
+           }
+            &:hover {
+              background-color: transparent;
+              padding: 0px;
+              outline: none;
+              box-shadow: none;
+            }
+						padding: 0px;
+						width: calc(@tree-node-width - 12px);
+						overflow: hidden;
+						.ant-input {
+              &:focus {
+                box-shadow: none;
+              }
+							&:hover {
+								outline: none;
+								box-shadow: none;
+							}
+              height: 100%;
+							padding-top: 0px;
+							padding-bottom: 0px;
+							border: 0px;
+							padding-left: 8px;
+							font-size: @default-font-size;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+.operation-icon:hover {
+	font-size: 20px;
+}
+.node-title-wrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-left: 8px;
+	&:hover {
+		.hide-file-operation {
+			margin-right: 4px;
+			transition: 0.3s;
+		}
+	}
+}
+.hide-file-operation {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	right: 0px;
+	margin-right: -64px;
+}
+
+.title {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+  width: 100%;
+}

@@ -1,12 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Article {
+export class File {
 	@PrimaryGeneratedColumn()
 	id: number;
-
-	@Column()
-	content: string;
 
 	@Column({ name: 'crt_time' })
 	crtTime: number;
@@ -14,9 +11,18 @@ export class Article {
 	@Column({ name: 'upd_time' })
 	updTime: number;
 
-	@Column({ name: 'user_id' })
-	userId: number;
+	@Column({ name: 'atc_id' })
+	atcId: number;
 
 	@Column()
-	title: string;
+	name: string;
+
+	@Column()
+	type: string;
+
+	@Column({ name: 'is_delete' })
+	isDelete: number;
+
+	@Column({ name: 'parent_id' })
+	parentId: string;
 }
