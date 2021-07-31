@@ -4,15 +4,23 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { initialSSRDevProxy, loadConfig, getCwd } from 'ssr-server-utils';
 import { dbUrl } from '../config/server';
 import FlywayJs from 'flyway-js';
+import * as express from 'express';
 import { ValidationPipe } from './validationPipe';
 import { Logger } from '@nestjs/common';
 import { AppModule } from './app.module';
+import { logger } from './middleware/logger.middleware';
+import { TransformInterceptor } from './interceptor/transform.interceptor';
+
 
 async function bootstrap(): Promise<void> {
-	const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  await initialSSRDevProxy(app, {
-		express: true
+	const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+		logger: ['debug', 'error', 'log', 'verbose', 'warn']
 	});
+
+	await initialSSRDevProxy(app, {
+		express: true
+  });
+  
 	app.useStaticAssets(join(getCwd(), './build'));
 
 	/** 添加DTO校验 */
@@ -37,7 +45,14 @@ async function bootstrap(): Promise<void> {
 	new FlywayJs(db_url, sql_dir, forceInit, flywayOptions).run();
 	Logger.log('数据库更新成功', 'database');
 
-	const { serverPort } = loadConfig();
+  const { serverPort } = loadConfig();
+  
+  app.use(express.json()); // For parsing application/json
+	app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
+	// 监听所有的请求路由，并打印日志
+  app.use(logger);
+  app.useGlobalInterceptors(new TransformInterceptor());
+  
 	await app.listen(serverPort);
 }
 

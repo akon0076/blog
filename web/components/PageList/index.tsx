@@ -7,38 +7,28 @@ import {
 } from '@ant-design/icons'
 import style from './index.less';
 import { http } from '../../http'
-import { node } from 'prop-types';
-import { getUUId } from '../../../src/tool';
+import { getUUId } from '../../../src/utils/tool';
+import { cloneDeep } from 'lodash';
 interface IProps {
-
+  fileList: any[];
 }
 const pageList: FC<IProps> = props => {
-  const { } = props;
+  const { fileList } = props;
   const [onEditKey, setOnEditKey] = useState('');
   const [onEditValue, setOnEditValue] = useState('');
+  const [onEditFileType, setOnEditFileType] = useState('');
   const [list, setList] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<any[]>([]);
-  const [fileMap, setFileMap] = useState({});
+  const [fileMap, setFileMap] = useState<any>({});
 
   useEffect(() => {
-    // saveFile({
-    //   type: 'directory',
-    //   title: '文件夹'
-    // });
-    getPage();
-  }, []);
+    getPage({ fileList });
+  }, [fileList]);
 
   /** 获取所有的文章 */
-  const getPage = useCallback(async () => {
-    const { success, data } = await http({
-      api: '/file',
-      method: 'get'
-    });
-    setExpandedKeys(data.map((item: any) => item.id));
-    if (success) {
-      const _data: any = constractFile(data);
-      setList(_data);
-    }
+  const getPage = useCallback(async ({ fileList }) => {
+    const _data: any = constractFile(cloneDeep(fileList));
+    setList(_data);
   }, []);
 
 
@@ -57,24 +47,39 @@ const pageList: FC<IProps> = props => {
   const saveFile = useCallback(async (params: {
     id: string;
     type: string;
+    isNew: boolean;
     title: string;
     parentId: string;
   }) => {
-    const { id, type, title, parentId } = params;
-    const { success } = await http({
+    const { id: nodeId, type, title, parentId, isNew } = params;
+    const { success, data } = await http({
       method: 'put',
       api: '/file',
       data: {
-        id,
+        id: isNew ? undefined : nodeId,
         type,
         name: title,
         parentId
       }
     });
     setOnEditKey('');
+    console.log('success', success);
     if (success) {
-      fileMap[id].title = title;
-      setList(list.slice())
+      const [{ id, parentId, name }] = data;
+      console.log('e', fileMap, parentId, data)
+      fileMap[parentId].children = [
+        ...(fileMap[parentId].children || []).filter((node: any) => node.id !== nodeId),
+        {
+          ...data,
+          key: id,
+          title: name
+        }]
+      fileMap[nodeId] = undefined;
+      fileMap[id] = data;
+      setFileMap({ ...fileMap });
+      setList(list.slice());
+      console.log('list', JSON.parse(JSON.stringify(list)))
+      console.log('data', data, fileMap)
     }
   }, [fileMap, list]);
 
@@ -97,15 +102,21 @@ const pageList: FC<IProps> = props => {
   const addDirectory = useCallback((params: {
     parentId: string;
     node: any;
+    type: 'directory' | 'file'
   }) => {
-    const { node } = params;
+    const { node, type } = params;
     const newId = getUUId();
-    const newNode = { id: newId, key: newId, title: '新建文件夹' };
+    const defultTitle = '新建文件夹';
+    setOnEditKey(newId);
+    setOnEditFileType(type);
+    setOnEditValue(defultTitle);
+    setFileMap({ ...fileMap, [newId]: node })
+    const newNode = { id: newId, key: newId, title: defultTitle, type, isNew: true };
     node.children = [newNode, ...(node.children || [])];
     setList(list.slice());
     const _expandedKeys = Array.from(new Set([...expandedKeys, node.key]));
     setExpandedKeys(_expandedKeys);
-  }, [list, expandedKeys]);
+  }, [list, expandedKeys, fileMap]);
 
   const generateTreeData: any = useCallback((params: {
     list: any[];
@@ -115,7 +126,7 @@ const pageList: FC<IProps> = props => {
   }) => {
     const { list, onEditKey, onEditValue, parentId } = params;
     return list.map((node: any) => {
-      const { children = [], title, key, type } = node;
+      const { children = [], title, key, type, isNew } = node;
       return {
         ...node,
         title: onEditKey === key ? <Input
@@ -127,7 +138,8 @@ const pageList: FC<IProps> = props => {
             id: key,
             type,
             title: onEditValue,
-            parentId
+            parentId,
+            isNew
           })}
         /> : <div
           className={style['node-title-wrapper']}
@@ -143,7 +155,8 @@ const pageList: FC<IProps> = props => {
               className={style['operation-icon']}
               onClick={() => addDirectory({
                 parentId: key,
-                node
+                node,
+                type
               })}
             />
             <FileAddFilled

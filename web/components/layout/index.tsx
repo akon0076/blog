@@ -1,5 +1,5 @@
 
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import serialize from 'serialize-javascript'
 import { LayoutProps } from 'ssr-types-react'
 import App from './App'
@@ -21,7 +21,7 @@ const Layout = (props: LayoutProps) => {
         {injectCss}
       </head>
       <body>
-        <input id="env" className="inject-input" value={process.env.NODE_ENV} />
+        {/* <input id="env" className="inject-input" value={process.env.NODE_ENV} /> */}
         <div id="app"><App children={props.children} /></div>
         {
           state && <script dangerouslySetInnerHTML={{

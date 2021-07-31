@@ -19,9 +19,10 @@ export class ApiController {
 	@Put('/file')
 	async saveFile(@Body() body: ISaveFile) {
 		try {
-			await this.apiService.saveFile({
+			const newNode = await this.apiService.saveFile({
 				file: body as any
 			});
+			return newNode;
 		} catch (e) {
 			console.log(e);
 		}

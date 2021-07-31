@@ -5,10 +5,10 @@ export class File {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column({ name: 'crt_time' })
+	@Column({ name: 'crt_time', type: 'timestamp' })
 	crtTime: number;
 
-	@Column({ name: 'upd_time' })
+	@Column({ name: 'upd_time', type: 'timestamp' })
 	updTime: number;
 
 	@Column({ name: 'atc_id' })

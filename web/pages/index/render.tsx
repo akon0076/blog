@@ -4,13 +4,16 @@ import MDHeader from '../../components/MDHeader';
 import style from './index.less';
 import Editor from "rich-markdown-editor";
 import { http } from '../../http';
+import { Button } from 'antd';
 import { globalProps } from '@/interface';
 import PageList from '@/components/PageList';
 
 export default (props: SProps) => {
   const divRef = useRef<any>();
   const editerRef = useRef<ElementRef<typeof Editor>>();
-  const { state } = useContext<IContext<globalProps>>(window.STORE_CONTEXT);
+  const { state = {} } = useContext<IContext<globalProps>>(window.STORE_CONTEXT);
+  const { indexData } = state as any;
+  const { fileList } = indexData;
   const [value, setValue] = useState('Hello world!');
   const [title, setTitle] = useState('MarkDown');
   useEffect(() => {
@@ -22,6 +25,13 @@ export default (props: SProps) => {
       }
       event.stopPropagation();
     }, true);
+
+    /** leetCode */
+    function insert(intervals: number[][], newInterval: number[]): number[][] {
+      const res: number[][] = [];
+      return res;
+    };
+    console.log(insert([[1, 5]], [5, 7]));
 
   }, []);
 
@@ -39,7 +49,13 @@ export default (props: SProps) => {
 
   return (
     <div ref={divRef} className={style.index}>
-      <PageList />
+      <Button onClick={() => {
+        http({
+          method: 'get',
+          api: '/file'
+        })
+      }}>Test</Button>
+      <PageList fileList={fileList} />
       <MDHeader onClick={() => save({ value, title })} />
       <div className={style['editor-wapper']}>
         <Editor

@@ -2,9 +2,9 @@
 // 可通过 __isBrowser__ 或者 useEffect 判断当前在 浏览器环境做一些初始化操作
 
 import { LayoutProps } from 'ssr-types-react';
-import { IContext, SProps } from 'ssr-types-react'
-import { useLayoutEffect, useContext, useState, useCallback, useRef } from 'react';
-import { Ddata, globalProps } from '@/interface';
+import { IContext } from 'ssr-types-react'
+import { useEffect, useContext, useCallback } from 'react';
+import { globalProps } from '@/interface';
 
 const App = (props: LayoutProps) => {
   const { children } = props;
@@ -17,11 +17,11 @@ const App = (props: LayoutProps) => {
   }, []);
 
   /** 全局事件处理 */
-  useLayoutEffect(() => {
+  useEffect(() => {
     setSystemTheme({ matches: window.matchMedia('(prefers-color-scheme: dark)').matches });
 
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-      setSystemTheme({ matches: e.matches })
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({ matches }) => {
+      setSystemTheme({ matches })
     })
   }, []);
   return children!;

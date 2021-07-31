@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UsePipes } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Article, File } from '../../entity';
-import { getUUId } from '../../tool';
-
+import { getUUId } from '../../utils/tool';
+import { LogPipes } from 'src/pipes/log.pipe';
 export interface IApiService {
 	index: () => Promise<any>;
 }
@@ -36,10 +36,13 @@ export class ApiService {
 			...file,
 			id: file.id || getUUId()
 		};
-		this.fileRepository.save(record);
+		await this.fileRepository.save(record);
+		return await this.fileRepository.find({ id: record.id });
 	}
 
+	@UsePipes(new LogPipes())
 	async getFile(params?: { id: string }) {
+		console.log('getFile');
 		return await this.fileRepository.find();
 	}
 }

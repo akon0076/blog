@@ -14,6 +14,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 			username: 'root',
 			password: 'Akon0076wagy',
 			database: 'blog',
+			logging: 'all',
 			entities: [User, Article, File],
 			synchronize: false, // 是否同步实体 为ture时会使用entities创建表
 			keepConnectionAlive: true // 是否保持连接状态，如果为false，热更新会导致AlreadyHasActiveConnectionError
