@@ -48,7 +48,7 @@
     "webpack": "^4.0.0"
   },
   "scripts": {
-    "prod": "NODE_ENV=production ssr build && pm2 start pm2.config.js",
+    "prod": "ssr build && pm2 start pm2.config.js",
     "stop": "pm2 stop pm2.config.js",
     "deploy": "ssr build && ssr deploy",
     "start": "NODE_ENV=development SERVER_PORT=80 ssr start",
