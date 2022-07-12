@@ -2,7 +2,7 @@ import { join } from 'path';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { initialSSRDevProxy, loadConfig, getCwd } from 'ssr-server-utils';
-import { dbUrl } from '../config/server';
+import { dbUrl } from './config/server';
 import FlywayJs from 'flyway-js';
 import * as express from 'express';
 import { ValidationPipe } from './validationPipe';
