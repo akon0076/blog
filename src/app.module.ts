@@ -12,7 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 			host: 'localhost',
 			port: 3306,
 			username: 'root',
-			password: 'Akon0076wagy',
+			password: 'Akon***',
 			database: 'blog',
 			logging: 'all',
 			entities: [User, Article, File],
